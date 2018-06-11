@@ -1,0 +1,18 @@
+{
+    "projectName": "play-3",
+    "username": "prachi.shah.1105@resourceful-bear-147471.com",
+    "id": "af025120-656f-11e8-9ef8-3d254a45b9f1",
+    "namespace": "",
+    "orgType": "developer",
+    "loginUrl": "https://login.salesforce.com/",
+    "instanceUrl": "https://resourceful-bear-147471-dev-ed.my.salesforce.com",
+    "workspace": "D:\\prachi",
+    "subscription": [
+        "ApexClass",
+        "ApexComponent",
+        "ApexPage",
+        "ApexTrigger",
+        "AuraDefinitionBundle",
+        "StaticResource"
+    ]
+}

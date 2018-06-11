@@ -1,0 +1,59 @@
+<aura:component controller="employeedetail">
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+	 <aura:attribute name="contacts" type="Contact[]"/>
+     <aura:attribute name="page" type="integer" description="using for store page Number"/>
+    <aura:attribute name="pages" type="integer" description="using for store All Pages page Number"/>
+    <aura:attribute name="total" type="integer" description="total records count store "/>
+     <aura:attribute name="lstKey" type="id[]"/>
+<aura:attribute name="fullMap" type="map"/>
+ 
+
+   <lightning:input aura:id="keyword" name="enter-search" onchange="{!c.doInit}" type="search"/>
+          
+            <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer" style="width:50%;height:150px" >
+          <tr>
+            <td><div class="slds-truncate">Name</div></td>
+            <td><div class="slds-truncate">No. of Certificates</div></td>
+          </tr>
+          <aura:iteration items="{!v.contacts}" var="allcontact" indexVar="key">
+              <tr>
+                <td scope="col">
+                    <div class="slds-truncate"><a  onclick="{!c.showContact}" id="{!allcontact.Id}" aura:id="link">{!allcontact.Name}</a> <br/>
+
+                    </div>
+
+                </td>
+              
+                <td scope="col">
+                    <div class="slds-truncate"> {!allcontact.total_certi__c}<br/>
+                    </div>
+                </td>
+             </tr>
+          </aura:iteration>
+
+
+        </table>
+            <aura:iteration items="{!v.lstKey}" var="key" >
+<c:mapEntryChild map="{!v.fullMap}" key="{!key}"/>
+</aura:iteration>
+<br/>
+  <lightning:button disabled="{!v.page == 1}" variant="brand" label="Previous Page" onclick="{! c.navigate }"  />            
+                <lightning:button disabled="{!v.page == v.pages}" aura:id="previousPage" variant="brand" label="Next Page" onclick="{! c.navigate }" />
+            
+               <br/> 
+          <div  style="width:10px;height:25px,align=center" class="sizeBox">
+          
+       <ui:inputSelect aura:id="contactSize"   change="{!c.onSelectChange}" >
+               <ui:inputSelectOption text="10" label="10" value="true"/>
+                <ui:inputSelectOption text="15" label="15"/>
+            </ui:inputSelect>
+        
+        </div>
+        <br/>
+        <p>page {!v.page} / {!v.pages}</p>
+
+      
+
+</aura:component>

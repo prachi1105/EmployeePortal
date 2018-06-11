@@ -1,0 +1,223 @@
+<aura:component controller="employeedetail" implements="flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId,flexipage:availableForAllPageTypes">
+    
+   
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+
+    <aura:attribute name="countemergency" type="boolean" description="use for condition check ofmore than one contact" />
+    <aura:attribute name="userDetailCheck" type="boolean" description=" use for check condition of userdetail" />
+    <!--## when this attribute returns only then load the details #-->
+
+       <aura:if isTrue="{!v.userDetailCheck}">
+        <force:recordData aura:id="recordLoader"
+                          recordId="{!v.userInfo}"
+                          targetFields="{!v.personalInfo}"
+                          layoutType="FULL"
+                          targetError="{!v.recordError}"
+                          recordUpdated="{!c.handleRecordUpdated}"
+                          />
+    </aura:if>
+
+    <!--#### Handler for all tabs ### -->
+    
+
+    <aura:handler event="c:personaldetails" action="{!c.myAction}"/>
+     
+
+   
+    <aura:attribute name="personalInfo" type="Object" description="store targetFields"/>
+    <aura:attribute name="recordError" type="String"  description="store srecorderror"/>
+    
+     <!-- Attributes for personaldetails,certification,emergency contacts,search -->
+    
+    <aura:attribute name="delemrId" type="id" description="id of selected contact for delete"/>    
+    <aura:attribute name="conInfo" type="contact[]" description="store value of emergency contacts"/>
+    <aura:attribute name="userInfo" type="id" description="store id of logged in user"/>  
+    <aura:attribute name="certiInfo" type="string[]" description="store value of certificate"/>    
+       
+    <aura:attribute name="num" type="string" />
+    <aura:attribute name="count_con" type="string"/>
+     <!-- Attribute for aura id pass from employee navigation -->
+    
+    <div aura:id="MainDiv" >
+        <!-- personal detail tab
+        
+        <div class="slds-size-1-of-2 slds-medium-size-1-of-6 slds-large-size-9-of-12">  -->     
+          
+            <aura:if isTrue="{! v.num == 'p'}">
+                
+                <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer" style="width:90%;height:150px">
+                    
+                    <tr>
+                        <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                            <div class="slds-truncate" title="First Name"><b>First Name</b></div>
+                        </th>
+                        <td scope="col">
+                            <div class="slds-truncate">{!v.personalInfo.FirstName}</div>
+                        </td>          
+                        
+                    </tr>
+                    <tr>
+                        <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                            <div class="slds-truncate" title="Last Name"><b>Last Name</b></div>
+                        </th>
+                        <td scope="col">
+                            <div class="slds-truncate">{!v.personalInfo.LastName}</div>
+                        </td>               
+                        
+                    </tr>
+                    <tr>
+                        <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                            <div class="slds-truncate" title="Designation"><b>Designation</b></div>
+                        </th>
+                        <td scope="col">
+                            <div class="slds-truncate">{!v.personalInfo.Designation__c}</div>
+                        </td>               
+                        
+                    </tr>
+                    <tr>
+                        <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                            <div class="slds-truncate" title="Technology"><b>Technology</b></div>
+                        </th>
+                        <td scope="col">
+                            <div class="slds-truncate">{!v.personalInfo.Technology__c}</div>
+                        </td>               
+                        
+                    </tr>
+                    <tr>
+                        <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                            <div class="slds-truncate" title="Social Media"><b>Social Media</b></div>
+                        </th>
+                        <td scope="col">
+                            <div class="slds-truncate">{!v.personalInfo.Social_Media_Link__c}</div>
+                        </td>               
+                        
+                    </tr>
+                    <tr>
+                        <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                            <div class="slds-truncate" title="Interests"><b>Interests</b></div>
+                        </th>
+                        <td scope="col">
+                            <div class="slds-truncate">{!v.personalInfo.Interests__c}</div>
+                        </td>               
+                        
+                    </tr>
+                </table>
+                
+            </aura:if>
+            <aura:if isTrue="{!not(empty(v.recordError))}">
+                <div class="recordError">
+                    {!v.recordError}</div>
+            </aura:if>
+            
+       
+        
+        <!-- Certification details -->
+        <aura:if isTrue="{! v.num == 'c'}">
+            <lightning:button name="modal" label="Add Certificate" onclick="{!c.modal}" />
+            
+            <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer" style="width:90%;height:150px">
+                <tr>
+                    <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                        <div class="slds-truncate" title="Name"><b>Name</b></div>
+                    </th>
+                    <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                        <div class="slds-truncate" title="Link"><b>Link</b></div>
+                    </th>
+                    <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                        <div class="slds-truncate" title="Expiration"><b>Expiry</b></div>
+                    </th>                
+                     <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                        <div class="slds-truncate" title="Action"><b>Action</b></div>
+                    </th>
+                </tr>
+                <aura:iteration items="{!v.certiInfo}" var="certi" indexVar="indx">     
+                    <tr>
+                        <td scope="col">
+                            <div class="slds-truncate">{! certi.Name }</div>
+                        </td> 
+                        <td scope="col">
+                            <div class="slds-truncate">{! certi.Link__c }</div>
+                        </td> 
+                        <td scope="col">
+                            <div class="slds-truncate">{! certi.Valid_Till__c }</div>
+                        </td>  
+                        <td>
+                            <lightning:button label="Edit" value="{!indx}" onclick="{!c.editcerti}"/>
+                        </td>                   
+                    </tr>
+                </aura:iteration> 
+            </table>
+            
+        <!-- generate chart -->    
+    <ltng:require scripts="{!$Resource.Chart}" afterScriptsLoaded="{!c.generateChart}"/>
+    <div class="slds-box">
+        
+    
+    <canvas aura:id="linechart" height="300" width="450"></canvas>
+    </div>
+        </aura:if>
+
+        <!--emergency contact details --> 
+         <aura:if isTrue="{! v.num == 'e'}">
+         <aura:if isTrue="{!v.countemergency}">
+            <force:recordData aura:id="delemergencycon"
+                              recordId="{!v.delemrId}"
+                              fields="Id"
+                              targetError="{!v.recordError}"
+                              recordUpdated="{!c.emer_con_update}" />
+            </aura:if>
+       
+           
+            <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer" style="width:90%;height:150px">
+                <tr>
+                    <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                        <div class="slds-truncate" title="Name"><b>Name</b></div>
+                    </th>
+                    <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                        <div class="slds-truncate" title="Number"><b>Number</b></div>
+                    </th>
+                    <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                        <div class="slds-truncate" title="Email"><b>Email</b></div>
+                    </th> 
+                    <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                        <div class="slds-truncate" title="Relationship"><b>Relationship</b></div>
+                    </th> 
+                    <th scope="col" class="slds-text-title_caps slds-text-heading_label">
+                        <div class="slds-truncate" title="action"><b>Action</b></div>
+                    </th> 
+                </tr>
+                <aura:iteration var="emp" items="{! v.conInfo }">           
+                    <tr>
+                        <td scope="col">
+                            <div class="slds-truncate">{! emp.Name }</div>
+                        </td> 
+                        <td scope="col">
+                            <div class="slds-truncate">{!emp.Phone }</div>
+                        </td> 
+                        <td scope="col">
+                            <div class="slds-truncate">{! emp.Email }</div>
+                        </td> 
+                        <td scope="col">
+                            <div class="slds-truncate">{! emp.Relationship__c }</div>
+                        </td> 
+                        <aura:if isTrue="{!v.count_con>1}">
+
+                            <!-- condition only true when more than one  emergency contact exists -->
+                        <td>
+                            <lightning:button label="Delete" value="{!emp.Id}" onclick="{!c.delete_emergency_con}"/>
+                        </td>
+                    </aura:if>
+                    </tr>
+                </aura:iteration> 
+            </table> 
+        </aura:if>
+        <!-- Know your Colleagues tab  -->
+        <aura:if isTrue="{! v.num == 's'}">
+         
+          <c:pagination/>
+
+        </aura:if>
+         </div>
+   
+</aura:component>

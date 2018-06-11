@@ -1,0 +1,24 @@
+<aura:component controller="employeedetail" access="global">
+<aura:attribute name="certi_id" type="string" description="store the id of edit record"/>
+<aura:attribute name="certi_name" type="string" description="store name of certificate"/>
+<aura:attribute name="certi_link" type="string" description="store link of certificate"/>
+  <aura:attribute name="valid_date" type="date" description="store date of certificate"/>
+<aura:attribute name="certimessage" type="string"/>
+
+<lightning:overlayLibrary aura:id="overlayLib"/>
+
+<div class="slds-form-element">
+	<form >
+<lightning:input name="name" label="Name" aura:id="name" value="{!v.certi_name}" required=""/>
+ <lightning:input name="link" label="link" aura:id="link" value="{!v.certi_link}"/>
+ <lightning:input name="date" label="expiration Date" type="date" aura:id="date" value="{!v.valid_date}" />
+<!-- <div class="slds-form-element__help" id="form-error-01">This field is required</div>-->
+
+  <lightning:button label="Add" iconPosition="left"   onclick="{!c.addcerti}"  />
+
+ </form>
+</div>
+
+
+
+</aura:component>

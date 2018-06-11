@@ -1,0 +1,18 @@
+<aura:component>
+        <aura:registerEvent name="empdetail" type="c:personaldetails" />
+
+<lightning:verticalNavigation >
+
+            <lightning:verticalNavigationSection >
+                <lightning:verticalNavigationItemIcon aura:id="p" label="Personal Details" name="Personal Details"  iconName="utility:user" onclick="{!c.detailclick}" />
+                <lightning:verticalNavigationItemIcon aura:id="c" label="Certifications" name="Certifications" iconName="utility:lock" onclick="{!c.detailclick}" />
+                <lightning:verticalNavigationItemIcon aura:id="e" label="Emergency Contacts" name="Emergency Contacts" iconName="utility:open_folder" onclick="{!c.detailclick}"/>
+                <lightning:verticalNavigationItemIcon aura:id="s" label="Know Your Colleagues" name="Know Your Colleagues" iconName="utility:groups" onclick="{!c.detailclick}"/>
+            </lightning:verticalNavigationSection>
+        </lightning:verticalNavigation>
+
+</aura:component>
+
+
+    
+

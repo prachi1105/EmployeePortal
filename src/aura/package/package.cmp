@@ -1,0 +1,17 @@
+	<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes">
+	<c:employee_header ></c:employee_header>
+	<br/>
+	<br/>
+
+	<div class="slds-box slds-theme_default">
+	<lightning:layout multiplerows="true"> 
+    <lightning:layoutItem padding="around-small" size="3">
+	<c:employee_nav ></c:employee_nav></lightning:layoutItem>
+	<lightning:layoutItem padding="around-small" size="10">
+	<c:employee_body ></c:employee_body>
+	</lightning:layoutItem>
+
+	</lightning:layout>
+	</div>
+	<c:employee_footer ></c:employee_footer>
+	</aura:component>

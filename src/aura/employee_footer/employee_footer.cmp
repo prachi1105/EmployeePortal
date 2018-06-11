@@ -1,0 +1,7 @@
+<aura:component >
+    <!-- footer part -->
+     <aura:handler name="init" value="{!this}" action="{!c.currentYear}"/>
+    <aura:attribute name="year" type="string" description="store current year"/>
+     <div class="slds-docked-form-footer" height="100px">Copyright {!v.year}, Incapsulate, LLC
+    </div>
+</aura:component>

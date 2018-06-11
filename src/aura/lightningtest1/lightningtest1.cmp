@@ -1,0 +1,11 @@
+<aura:component >
+    <aura:attribute name="firstname" type="string"/>
+    <aura:attribute name="lastname" type="string"/>
+    <aura:attribute name="fname" type="string"/>
+   
+    <!--<h1>{!v.firstname}{!v.lastname}</h1>-->
+    {!v.fname}
+    <lightning:button label="click" onclick="{!c.add}" />
+    
+    
+</aura:component>

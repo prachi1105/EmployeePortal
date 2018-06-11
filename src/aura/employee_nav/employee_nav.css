@@ -1,0 +1,6 @@
+.THIS .colorchange{
+    background-color: blue;
+}
+.THIS .colorchange:hover{
+    background-color: red;
+}
